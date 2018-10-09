@@ -1,0 +1,114 @@
+{% extends './base.html' %}
+
+
+
+{% block form_inline %}
+
+{%endblock%}
+
+
+{% block table %}
+<form action="" method="post">
+  {% csrf_token %}
+
+  {% if workday_list %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+        <div class="panel panel-warning">
+          <div class="panel-body">
+            <div class="col-sm-9 text-center">
+              <span style="display: block; margin-top: 5px; margin-bottom: 5px;">Here you can delete wrong records</span>
+
+            </div>
+            <div class="col-sm-3 text-center">
+             <input type="submit" class="btn btn-warning" name="del" value="- DATE">
+            </div>           
+
+            <!-- <span>Here you can delete wrong records</span> -->
+            <!-- <input type="submit" class="btn btn-warning pull-right" name="del" value="- DATE"> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">
+        <table class="table table-bordered table-hover text-center" >
+          <thead>
+            <tr class="success">
+              <th class="text-center">Date</th>
+              <th class="text-center">Time in</th>
+              <th class="text-center">Time out</th>
+              <th class="text-center">Total</th>
+              <th class="text-center">Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for workday in workday_list %}
+            <tr>
+              <td >{{workday.date_work|date:"d M"}}</td>
+              <td >{{workday.start_work|time:"H:i" }}</td>
+              <td >{{workday.end_work|time:"H:i" }}</td>
+              <td >{{workday.sum_day}}</td>
+              <td ><input type="checkbox" name="choices" value="{{workday.id}}"/></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </form>
+      </div>
+    </div>
+  </div>
+  {% else %}
+    <p>There are not working days records in the current month</p>
+  {% endif %}
+</form>
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+          // format: 'DD/MM/YYYY HH:mm',
+          format: 'DD/MM/YYYY',
+          defaultDate: 'moment',
+          // date: date([2018, 11, 24, 10, 33, 30, 0])
+          // daysOfWeekDisabled: [0,],
+        });
+    });
+    $(function () {
+        $('#datetimepicker2').datetimepicker({
+          // format: 'LT',
+          format: 'HH:mm',
+          defaultDate: "1/1/2018 08:00",
+          stepping: 15,
+          disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 22 }), moment({ h: 24 })]],
+        });
+    });
+    $(function () {
+        $('#datetimepicker3').datetimepicker({
+          defaultDate:moment(new Date()).hours(16).minutes(0),
+          format: 'HH:mm',
+          stepping: 15,
+          disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 22 }), moment({ h: 24 })]]
+        });
+    });
+    $(function () {
+      $('#datetimepicker4').datetimepicker({
+          viewMode: 'years',
+          format: 'YYYY/MM',
+          // format: 'DD/MM/YYYY',
+
+      });
+    });
+    $(function () {
+      $("#edit").on("click", function(){
+        $("#modal-edit").modal();
+
+      });
+    });
+  </script>
+{% endblock %}
+

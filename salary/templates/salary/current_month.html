@@ -1,0 +1,129 @@
+{% extends './base.html' %}
+
+{% block form_inline %}
+
+  <!-- form-inline -->
+  <div class="container">
+    <div class='row'>
+      <div class='col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2'>
+            <form class="form-inline text-center" action="" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <div class='input-group date center-block' id='datetimepicker1'>
+                  {{form1.date_time_input_1}}
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class='input-group date center-block' id='datetimepicker2'>
+                  {{form1.date_time_input_2}}
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class='input-group date center-block' id='datetimepicker3'>
+                  {{form1.date_time_input_3}}
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="submit" class="btn btn-success" name="add" value="+ DATE">
+              </div>
+            </form>
+      </div>
+    </div>
+  </div>
+
+  <br/>
+{%endblock%}
+
+
+{% block table %}
+  {% if workday_list %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">
+        <table class="table table-bordered table-hover text-center" >
+          <thead>
+            <tr class="success">
+              <th class="text-center">Date</th>
+              <th class="text-center">Time in</th>
+              <th class="text-center">Time out</th>
+              <th class="text-center">Total</th>
+              <th style="display:none" class="text-center">Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for workday in workday_list %}
+            <tr>
+              <td >{{workday.date_work|date:"d M"}}</td>
+              <td >{{workday.start_work|time:"H:i" }}</td>
+              <td >{{workday.end_work|time:"H:i" }}</td>
+              <td >{{workday.sum_day}}</td>
+              <td style="display:none"><input type="checkbox" name="choices" value="{{workday.id}}"/></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </form>
+      </div>
+    </div>
+  </div>
+  {% else %}
+    <p>There are not working days records in the current month</p>
+  {% endif %}
+{% endblock %}
+
+
+{% block js %}
+  <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+          // format: 'DD/MM/YYYY HH:mm',
+          format: 'DD/MM/YYYY',
+          defaultDate: 'moment',
+          // date: date([2018, 11, 24, 10, 33, 30, 0])
+          // daysOfWeekDisabled: [0,],
+        });
+    });
+    $(function () {
+        $('#datetimepicker2').datetimepicker({
+          // format: 'LT',
+          format: 'HH:mm',
+          defaultDate: "1/1/2018 08:00",
+          stepping: 15,
+          disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 22 }), moment({ h: 24 })]],
+        });
+    });
+    $(function () {
+        $('#datetimepicker3').datetimepicker({
+          defaultDate:moment(new Date()).hours(16).minutes(0),
+          format: 'HH:mm',
+          stepping: 15,
+          disabledTimeIntervals: [[moment({ h: 0 }), moment({ h: 7 })], [moment({ h: 22 }), moment({ h: 24 })]]
+        });
+    });
+    $(function () {
+      $('#datetimepicker4').datetimepicker({
+          viewMode: 'years',
+          format: 'YYYY/MM',
+          // format: 'DD/MM/YYYY',
+
+      });
+    });
+    $(function () {
+      $("#edit").on("click", function(){
+        $("#modal-edit").modal();
+
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+
+<head>
+  <meta charset="utf-8">
+  {% block title %} <title>Current month time card </title> {% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script type="text/javascript" src="{% static "/js/moment.min.js" %}"></script>
+
+  <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="{% static "/js/bootstrap-datetimepicker.min.js" %}"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <link rel="stylesheet" type='text/css' href="{% static "/css/bootstrap-datetimepicker.min.css" %}">
+
+  <link href="https://fonts.googleapis.com/css?family=Mali" rel="stylesheet">
+
+<style>
+  body{
+    background: url(http://www1.cbn.com/sites/all/themes/cbn_default/images/int-bg-radio-instrumental.jpg) no-repeat center 50px;
+    height: 100%;
+    font-family: Ubuntu, Comic Sans MS;
+  }
+
+  .container-border{
+   border: 1px solid #ccc;
+   border-radius: 2px;  
+   }
+
+  .center-block {
+    display: table;  /* Instead of display:block */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .navbar {
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+    background: #fafafa;
+    border-radius: 0px; 
+  }
+  .navbar-brand{
+    font-size: 14px;
+  }
+  .btn, .input-group-addon, .form-control{
+    border-radius: 0px;
+  }
+  .input-group{
+    max-width: 150px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .table{
+    background-color: rgba(255, 255, 255, .7);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .btn-success, .btn-warning{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 20px;
+  }
+  .success{
+    background-color: red;
+  }
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <!-- BRAND -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alignment-example" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/salary" style="font-family: Mali; font-weight: bold; font-size: 16px;">My time cards</a>
+    </div>
+
+    <!-- COLLAPSIBLE NAVBAR -->
+    <div class="collapse navbar-collapse" id="alignment-example">
+
+    <!-- Links -->
+    <ul class="nav navbar-nav">
+      <li><a href="#" id="edit">Edit <span class="glyphicon glyphicon-calendar"></span><span class="sr-only">(current)</span></a></li>
+      <li><a href="#">History <span class="glyphicon glyphicon-calendar"></span></a></li>
+      <!-- <li><a href="#">Link 3</a></li> -->
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><p class="navbar-text">Signed in as Mark Otto</p></li>
+      <li><button type="button" class="btn btn-default navbar-btn">Sign out</button></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+<br/>
+
+{% block form_inline %}
+
+{% endblock %}
+
+{% block table %}
+
+{% endblock %}
+
+
+  <!-- modal form edit-->
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title text-center">Select the month to edit</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class='input-group date center-block' id='datetimepicker4'>
+              {{form2.date_time_input_4}}
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-primary" name="edit" value="Select"/>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</form>
+
+{% block js %}
+
+{% endblock %}
+
+</body>
+</html>
