@@ -21,5 +21,5 @@ urlpatterns = [
     path('salary/', include('salary.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 
-    path('api/user/', include('accounts.api.user.urls'), name='api-user')
+    path('api/user/', include((('accounts.api.user.urls'), 'api-user')))
 ]

@@ -10,3 +10,6 @@ class UserDetailAPIView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserDetailSerializer
     lookup_field = 'username'
+
+    def get_serializer_context(self):
+        return {'request': self.request}
