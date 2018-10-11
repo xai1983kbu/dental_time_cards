@@ -1,4 +1,8 @@
 from django.contrib import admin
+from salary.models import DaysAtWork
+
+admin.site.register(DaysAtWork)
+
 
 # Register your models here.
 

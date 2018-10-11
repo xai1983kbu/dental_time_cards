@@ -41,7 +41,7 @@ def current_month(request):
 					#if exist then delete old dates
 					date_match.delete()
 					#saving new date data
-					create_day = DaysAtWork(start_work=start_in, end_work=end_in, date_work=date_in)
+					create_day = DaysAtWork(start_work=start_in, end_work=end_in, date_work=date_in, owner=request.user)
 					create_day.save()
 				except (KeyError, DaysAtWork.DoesNotExist):
 				    #if does not exist just saving date data
